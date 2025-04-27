@@ -1,23 +1,9 @@
-def decolator_func(fn):
-    def wrapper(*args):
-        print('start')
-        result = fn(*args)
-        print('end')
-        return result
-    return wrapper
+l = ['Mon', 'tue', 'Wed', 'thu', 'Fri', 'sat', 'Sun']
 
-@decolator_func
-def add_fn(a, b):
-    return a + b
-
-@decolator_func
-def minus_fn(a, b):
-    return a - b
+def change_words(words, fn):
+    for word in words:
+        print(fn(word))
 
 
-result = add_fn(10, 7)
-print(result)
-
-result2 = minus_fn(20, 8)
-print(result2)
-
+change_words(l, lambda word: word.capitalize())
+change_words(l, lambda word: word.lower())
