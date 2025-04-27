@@ -1,13 +1,16 @@
-def circle_area(pi):
-    def cicle_calc(range):
-        return pi * range * range
-    return cicle_calc
+def decolator_func(fn):
+    def wrapper(*args):
+        print('start')
+        result = fn(*args)
+        print('end')
+        return result
+    return wrapper
 
-fn1 = circle_area(3.14)
-fn2 = circle_area(3.141592)
+@decolator_func
+def add_fn(a, b):
+    return a + b
 
-result1 = fn1(10)
-result2 = fn2(10)
 
-print(result1)
-print(result2)
+result = add_fn(10, 7)
+print(result)
+
