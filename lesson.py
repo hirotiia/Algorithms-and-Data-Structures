@@ -1,6 +1,2 @@
-
-while True:
-    word = input('Enter:')
-    if word == 'ok':
-        break
-    print('next')
+for _ in range(10):
+    print('Yes')
