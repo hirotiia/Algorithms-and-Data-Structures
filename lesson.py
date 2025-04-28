@@ -7,6 +7,10 @@ def main():
             os.makedirs('data/csv', exist_ok=True)
             self.target_file_path = 'data/csv/ranking.csv'
             self.is_file_exist = os.path.isfile(self.target_file_path)
+
+            if not self.is_file_exist:
+                self.create_csv_file()
+
             self.csvdata = []
             self.found = False
             name = input('こんにちは!私はRobokoです。あなたの名前は何ですか?')
@@ -15,6 +19,12 @@ def main():
             self.recomend_favorite_restaurant()
             favoriteFoodStore = input('{}さん。どこのレストランが好きですか?'.format(name))
             self.favoriteFoodStore = favoriteFoodStore.title()
+
+        def create_csv_file(self):
+            with open(self.target_file_path, 'w', newline='') as csvfile:
+                fieldnames = ['NAME', 'COUNT']
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writeheader()
 
         def recomend_favorite_restaurant(self):
             for row in self.csvdata:
@@ -37,14 +47,11 @@ def main():
             if self.favoriteFoodStore == '':
                 return
 
-            if self.is_file_exist:
-                with open(self.target_file_path, 'r', newline='') as csvfile:
-                    reader = csv.DictReader(csvfile)
-                    for row in reader:
-                        if row['NAME'] == self.favoriteFoodStore:
-                            row['COUNT'] = str(int(row['COUNT']) + 1)
-                            found = True
-                        self.csvdata.append(row)
+            for row in self.csvdata:
+                if row['NAME'] == self.favoriteFoodStore:
+                    row['COUNT'] = str(int(row['COUNT']) + 1)
+                    self.found = True
+                self.csvdata.append(row)
 
             if not self.found:
                 self.csvdata.append({
