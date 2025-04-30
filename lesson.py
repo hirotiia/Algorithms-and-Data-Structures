@@ -12,13 +12,14 @@ def main():
                 self.create_csv_file()
 
             self.csvdata = []
-            self.found = False
             name = input('こんにちは!私はRobokoです。あなたの名前は何ですか?')
             self.name = name
             self.get_csv_data()
             self.recomend_favorite_restaurant()
             favoriteFoodStore = input('{}さん。どこのレストランが好きですか?'.format(name))
             self.favoriteFoodStore = favoriteFoodStore.title()
+            self.save_csv()
+            self.final()
 
         def create_csv_file(self):
             with open(self.target_file_path, 'w', newline='') as csvfile:
@@ -32,7 +33,7 @@ def main():
                     choice = input('私のオススメのレストランは、 {}です。\nこのレストランは好きですか? [Yes/No]'.format(row['NAME'])).lower()
 
                     if choice in ['y', 'yes']:
-                        break
+                        return True
                     elif choice in ['n', 'no']:
                         break
                     print('yまたはnで答えてください')
@@ -47,14 +48,17 @@ def main():
             if self.favoriteFoodStore == '':
                 return
 
+            updated_data = []
+            found = False
+
             for row in self.csvdata:
                 if row['NAME'] == self.favoriteFoodStore:
                     row['COUNT'] = str(int(row['COUNT']) + 1)
-                    self.found = True
-                self.csvdata.append(row)
+                    found = True
+                updated_data.append(row)
 
-            if not self.found:
-                self.csvdata.append({
+            if not found:
+                updated_data.append({
                     'NAME': self.favoriteFoodStore,
                     'COUNT': '1',
                 })
@@ -64,19 +68,18 @@ def main():
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
 
-                for row in self.csvdata:
+                for row in updated_data:
                     writer.writerow(row)
 
+            self.csvdata = updated_data
+
         def final(self):
-            self.save_csv()
             print('{}さん。ありがとうございました。\n良い一日を!さようなら。'.format(self.name))
 
-    roboko = Roboko()
 
-    try:
-        roboko.ask_favorite_restaurant()
-    finally:
-        roboko.final()
+
+    Roboko()
+
 
 
 main()
