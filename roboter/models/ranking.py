@@ -1,6 +1,6 @@
 """Generates ranking model to write to CSV
 
-TODO (jsakai) Rewrite to DB instead of CSV
+TODO (hnakano) Rewrite to DB instead of CSV
 """
 import collections
 import csv
@@ -63,7 +63,7 @@ class RankingModel(CsvModel):
 
     def save(self):
         """Save data to csv file."""
-        # TODO (jsakai) Use locking mechanism for avoiding dead lock issue
+        # TODO (hnakano) Use locking mechanism for avoiding dead lock issue
         with open(self.csv_file, 'w+') as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=self.column)
             writer.writeheader()

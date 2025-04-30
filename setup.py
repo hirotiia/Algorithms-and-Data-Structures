@@ -13,7 +13,7 @@ setup(
     package_data={ 'roboter': ['templates/*.txt'] },
     url='http://sakaijunsoccer.appspot.com',
     license='MIT',
-    author='jsakai',
+    author='hnakano',
     author_email='example@example.com',
     # You can specify install_requires if setuptools is installed
     # install_requires=['termcolor==1.1.0'],
